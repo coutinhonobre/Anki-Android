@@ -17,7 +17,9 @@ jobs:
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         run: |
-          curl -X POST -H 'Content-type: application/json' --data '{
-            "text": "Um novo Pull Request foi criado por ${{ github.event.pull_request.user.login }}: ${{ github.event.pull_request.title }} - ${{ github.event.pull_request.html_url }}",
-            "channel": "#pull-request"
-          }' $SLACK_WEBHOOK_URL
+          curl -X POST --data-urlencode "payload={
+            \"channel\": \"#nome-do-canal\",
+            \"username\": \"webhookbot\",
+            \"text\": \"Um novo Pull Request foi criado por ${{ github.event.pull_request.user.login }}: ${{ github.event.pull_request.title }} - ${{ github.event.pull_request.html_url }}\",
+            \"icon_emoji\": \":ghost:\"
+          }" $SLACK_WEBHOOK_URL
