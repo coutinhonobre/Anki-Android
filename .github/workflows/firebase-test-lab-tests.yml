@@ -22,7 +22,7 @@ jobs:
 
       - name: Setup gcloud CLI
         run: |
-          echo "${{ secrets.SERVICE_ACCOUNT }}" > service-account-key.json
+          echo -e "${{ secrets.SERVICE_ACCOUNT }}" > service-account-key.json
           gcloud auth activate-service-account --key-file=service-account-key.json          
 
       - name: Build Debug APK and Test APK
