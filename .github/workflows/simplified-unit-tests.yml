@@ -1,0 +1,56 @@
+name: Simplified Unit Tests
+
+on:
+  pull_request:
+    branches:
+      - main
+      - develop
+    paths:
+      - 'AnkiDroid/**'
+      - 'api/**'
+      - '**/*.gradle'
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  unit:
+    name: JUnit Tests (${{ matrix.os }})
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 50
+
+      - name: Configure JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: "temurin"
+          java-version: "17"
+
+      - name: Verify JDK17
+        run: java -fullversion 2>&1 | grep '17.0'
+        shell: bash
+
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+        with:
+          cache-read-only: ${{ github.ref != 'refs/heads/main' }}
+          gradle-home-cache-cleanup: true
+
+      - name: Run Unit Tests
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: jacocoUnitTestReport --daemon
+
+      - uses: codecov/codecov-action@v3
+        with:
+          verbose: true
