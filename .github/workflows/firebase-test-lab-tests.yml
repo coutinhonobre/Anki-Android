@@ -20,24 +20,15 @@ jobs:
           distribution: 'adopt'
           java-version: 17
 
-      - name: Setup gcloud CLI
-        run: |
-          echo -e "${{ secrets.SERVICE_ACCOUNT }}" > service-account-key.json
-          gcloud auth activate-service-account --key-file=service-account-key.json          
-
-      - name: Debugging - Print service-account-key.json
-        run: cat service-account-key.json
-
       - name: Build Debug APK and Test APK
         run: |
           ./gradlew AnkiDroid:assembleDebug
           ./gradlew AnkiDroid:connectedFullDebugAndroidTest
 
-      - name: Run Tests on Firebase Test Lab
-        run: |
-          gcloud config set project your-firebase-project-id
-          gcloud firebase test android run \
-            --type=instrumentation \
-            --app=AnkiDroid/build/outputs/apk/full/debug/AnkiDroid-full-x86_64-debug.apk \
-            --test=AnkiDroid/build/outputs/apk/androidTest/full/debug/AnkiDroid-full-debug-androidTest.apk \
-            --device=model=Pixel2,version=28,locale=en,orientation=portrait
+      - name: Run tests on Firebase Test Lab
+        uses: asadmansr/Firebase-Test-Lab-Action@v1.0
+        with:
+          arg-spec: 'tests-config-test-lab.yml:android-pixel-4'
+        env:
+          SERVICE_ACCOUNT: ${{ secrets.SERVICE_ACCOUNT }}
+
