@@ -1,0 +1,60 @@
+name: Android Lint
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  lint:
+    name: Run Lint
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'adopt'
+          java-version: '17'
+
+      - name: Cache Gradle dependencies
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: Clean with Gradle with Retry
+        uses: nick-invision/retry@v2
+        with:
+          timeout_minutes: 10
+          retry_wait_seconds: 60
+          max_attempts: 3
+          command: ./gradlew clean --daemon
+
+      - name: Warm Gradle Cache
+        uses: nick-invision/retry@v2
+        with:
+          timeout_minutes: 10
+          retry_wait_seconds: 60
+          max_attempts: 3
+          command: ./gradlew :AnkiDroid:compilePlayDebugJavaWithJavac compileLint lint-rules:compileTestJava --daemon
+
+      - name: Lint with Gradle
+        run: ./gradlew lintPlayDebug :api:lintDebug ktLintCheck lint-rules:test --daemon
+
+    # Opcional: Se você quiser postar os resultados do lint como comentários no PR
+    #- name: Post lint results
+    #  uses: yutailang0119/action-android-lint@v1
+    #  with:
+    #    github_token: ${{ secrets.GITHUB_TOKEN }}
+    #    lint_result_dir: app/build/reports/lint-results.xml
