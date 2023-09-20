@@ -25,6 +25,9 @@ jobs:
           echo -e "${{ secrets.SERVICE_ACCOUNT }}" > service-account-key.json
           gcloud auth activate-service-account --key-file=service-account-key.json          
 
+      - name: Debugging - Print service-account-key.json
+        run: cat service-account-key.json
+
       - name: Build Debug APK and Test APK
         run: |
           ./gradlew AnkiDroid:assembleDebug
