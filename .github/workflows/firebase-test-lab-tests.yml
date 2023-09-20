@@ -23,7 +23,7 @@ jobs:
       - name: Build Debug APK and Test APK
         run: |
           ./gradlew AnkiDroid:assembleDebug
-          ./gradlew AnkiDroid:connectedFullDebugAndroidTest
+          ./gradlew AnkiDroid:packageFullDebugAndroidTest
 
       - name: Run tests on Firebase Test Lab
         uses: asadmansr/Firebase-Test-Lab-Action@v1.0
