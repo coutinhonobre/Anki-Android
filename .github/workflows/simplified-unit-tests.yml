@@ -6,9 +6,13 @@ on:
       - main
       - develop
     paths:
+      - '.github/workflows/**'
       - 'AnkiDroid/**'
       - 'api/**'
+      - 'lint-rules/**'
+      - 'annotations/**'
       - '**/*.gradle'
+      - 'gradle/**'
   push:
     branches:
       - main
