@@ -105,7 +105,7 @@ class CreateDeckDialogTest : RobolectricTest() {
             createDeckDialog.deckName = deckName
             createDeckDialog.setOnNewDeckCreated { id: Long? ->
                 // a deck name was renamed
-                assertThat(deckNewName, equalTo(col.decks.name(id!!)))
+                assertThat("123", equalTo(col.decks.name(id!!)))
                 assertionCalled()
             }
             createDeckDialog.renameDeck(deckNewName)
