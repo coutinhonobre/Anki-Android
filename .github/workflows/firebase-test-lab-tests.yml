@@ -42,6 +42,10 @@ jobs:
           service_account_key: ${{ secrets.SERVICE_ACCOUNT }}
           project_id: anki-android
 
+      - name: Authenticate with gcloud
+        run: |
+          echo "${{ secrets.SERVICE_ACCOUNT }}" | gcloud auth activate-service-account --key-file=-    
+
       - name: Run tests on Firebase Test Lab using gcloud
         run: |
           gcloud firebase test android run \
