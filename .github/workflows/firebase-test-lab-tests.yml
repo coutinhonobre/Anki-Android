@@ -26,7 +26,8 @@ jobs:
 
       - name: Build and Run Espresso Tests
         run: |
-          ./gradlew connectedFullDebugAndroidTest
+          ./gradlew AnkiDroid:assembleDebug
+          ./gradlew AnkiDroid:packageFullDebugAndroidTest
 
       - name: Run Tests on Firebase Test Lab
         run: |
