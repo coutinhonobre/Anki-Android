@@ -20,8 +20,10 @@ jobs:
           distribution: 'adopt'
           java-version: 17
 
-      - name: Setup gcloud CLI
-        run: echo "${{ secrets.SERVICE_ACCOUNT }}" >> service-account-key.json
+      - name: Write and Process Secret
+        run: |
+          echo '${{ secrets.SERVICE_ACCOUNT }}' > temp.json
+          jq . temp.json > service-account-key.json
 
       - name: Install jq
         run: sudo apt-get install jq
