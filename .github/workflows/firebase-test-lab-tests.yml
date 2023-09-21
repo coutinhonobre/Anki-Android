@@ -40,7 +40,7 @@ jobs:
         uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
         with:
           version: '270.0.0'
-          service_account_key: ${{ secrets.SERVICE_ACCOUNT }}
+          service_account_key: ${{ secrets.SERVICE_ACCOUNT_64 }}
 
       - name: Set current project
         run: gcloud config set project ${{ secrets.FIREBASE_APP_ID }}
