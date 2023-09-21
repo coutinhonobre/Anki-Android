@@ -21,8 +21,13 @@ jobs:
           java-version: 17
 
       - name: Setup gcloud CLI
-        run: |
-          echo "${{ secrets.SERVICE_ACCOUNT }}" > service-account-key.json          
+        run: echo "${{ secrets.SERVICE_ACCOUNT }}" > service-account-key.json
+
+      - name: Install jq
+        run: sudo apt-get install jq
+
+      - name: Validate JSON
+        run: jq . service-account-key.json
 
       - name: Build and Run Espresso Tests
         run: |
