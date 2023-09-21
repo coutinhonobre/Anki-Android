@@ -40,7 +40,7 @@ jobs:
         uses: google-github-actions/setup-gcloud@main
         with:
           service_account_key: ${{ secrets.SERVICE_ACCOUNT }}
-          project_id: YOUR_PROJECT_ID
+          project_id: anki-androids
 
       - name: Run tests on Firebase Test Lab using gcloud
         run: |
