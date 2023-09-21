@@ -39,7 +39,7 @@ jobs:
       - name: Run Tests on Firebase Test Lab
         run: |
           gcloud auth activate-service-account --key-file=service-account-key.json
-          gcloud config set project ${{ secrets.FIREBASE_APP_ID }}
+          gcloud config set project anki-android
           gcloud firebase test android run \
             --type=instrumentation \
             --app=AnkiDroid/build/outputs/apk/full/debug/AnkiDroid-full-arm64-v8a-debug.apk \
