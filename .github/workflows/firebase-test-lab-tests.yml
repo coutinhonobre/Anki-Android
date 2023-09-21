@@ -39,10 +39,13 @@ jobs:
       - name: Login to Google Cloud
         uses: google-github-actions/setup-gcloud@v1
         with:
+          workload_identity_provider: 'projects/713203941830/locations/global/workloadIdentityPools/my-pool/providers/my-provider'
+          service_account: 'firebasetestlabapiservice@anki-android.iam.gserviceaccount.com'
           service_account_key: ${{ secrets.SERVICE_ACCOUNT_64 }}
 
       - name: Set current project
         run: gcloud config set project ${{ secrets.FIREBASE_APP_ID }}
+
 
       - name: Run tests on Firebase Test Lab using gcloud
         run: |
