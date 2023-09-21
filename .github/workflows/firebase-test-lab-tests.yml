@@ -31,11 +31,6 @@ jobs:
       - name: Validate JSON
         run: jq . service-account-key.json
 
-      - name: Build and Run Espresso Tests
-        run: |
-          ./gradlew AnkiDroid:assembleDebug
-          ./gradlew AnkiDroid:packageFullDebugAndroidTest
-
       - name: Login to Google Cloud
         uses: google-github-actions/setup-gcloud@v1
         with:
@@ -45,6 +40,12 @@ jobs:
 
       - name: Set current project
         run: gcloud config set project ${{ secrets.FIREBASE_APP_ID }}
+
+
+      - name: Build and Run Espresso Tests
+        run: |
+          ./gradlew AnkiDroid:assembleDebug
+          ./gradlew AnkiDroid:packageFullDebugAndroidTest
 
 
       - name: Run tests on Firebase Test Lab using gcloud
