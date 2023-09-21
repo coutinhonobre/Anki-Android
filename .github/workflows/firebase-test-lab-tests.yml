@@ -1,7 +1,7 @@
 name: Firebase Test Lab CI
 
 on:
-  pull_request:
+  push:
     branches:
       - main
       - develop
@@ -20,15 +20,20 @@ jobs:
           distribution: 'adopt'
           java-version: 17
 
-      - name: Build Debug APK and Test APK
+      - name: Setup gcloud CLI
         run: |
-          ./gradlew AnkiDroid:assembleDebug
-          ./gradlew AnkiDroid:packageFullDebugAndroidTest
+          echo "${{ secrets.SERVICE_ACCOUNT }}" > service-account-key.json          
 
-      - name: Run tests on Firebase Test Lab
-        uses: asadmansr/Firebase-Test-Lab-Action@v1.0
-        with:
-          arg-spec: 'tests-config-test-lab.yml:android-pixel-4'
-        env:
-          SERVICE_ACCOUNT: ${{ secrets.SERVICE_ACCOUNT }}
+      - name: Build and Run Espresso Tests
+        run: |
+          ./gradlew connectedFullDebugAndroidTest
 
+      - name: Run Tests on Firebase Test Lab
+        run: |
+          gcloud auth activate-service-account --key-file=service-account-key.json
+          gcloud config set project ${{ secrets.FIREBASE_APP_ID }}
+          gcloud firebase test android run \
+            --type=instrumentation \
+            --app=AnkiDroid/build/outputs/apk/full/debug/AnkiDroid-full-arm64-v8a-debug.apk \
+            --test=AnkiDroid/build/outputs/apk/androidTest/full/debug/AnkiDroid-full-debug-androidTest.apk \
+            --device=model=Pixel2,version=28,locale=en,orientation=portrait
