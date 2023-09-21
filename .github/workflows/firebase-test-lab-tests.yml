@@ -48,4 +48,4 @@ jobs:
           os-version-id: 30
           num-flaky-test-attempts: 1
         env:
-          SERVICE_ACCOUNT: service-account-key.json
+          SERVICE_ACCOUNT: ${{ secrets.SERVICE_ACCOUNT }}
