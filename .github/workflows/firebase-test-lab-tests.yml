@@ -23,13 +23,13 @@ jobs:
           distribution: 'adopt'
           java-version: 17
 
+      - name: Install jq
+        run: sudo apt-get install jq
+
       - name: Write and Process Secret
         run: |
           echo '${{ secrets.SERVICE_ACCOUNT }}' > temp.json
           jq . temp.json > service-account-key.json
-
-      - name: Install jq
-        run: sudo apt-get install jq
 
       - name: Validate JSON
         run: jq . service-account-key.json
@@ -45,7 +45,6 @@ jobs:
         run: |
           ./gradlew AnkiDroid:assembleDebug
           ./gradlew AnkiDroid:packageFullDebugAndroidTest
-
 
       - name: Run tests on Firebase Test Lab using gcloud
         run: |
