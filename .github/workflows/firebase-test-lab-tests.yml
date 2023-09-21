@@ -26,8 +26,15 @@ jobs:
       - name: Install jq
         run: sudo apt-get install jq
 
-      - name: Validate JSON
-        run: jq . service-account-key.json
+      - name: Validate and Print Error Line
+        run: |
+          echo "${{ secrets.SERVICE_ACCOUNT }}" > service-account-key.json
+          if ! jq . service-account-key.json > /dev/null 2>&1; then
+            ERROR_LINE=$(jq . service-account-key.json 2>&1 | grep -oP 'line \K\d+')
+            echo "Error found on line: $ERROR_LINE"
+            sed "${ERROR_LINE}q;d" service-account-key.json
+          fi
+      
 
       - name: Build and Run Espresso Tests
         run: |
