@@ -36,15 +36,14 @@ jobs:
           ./gradlew AnkiDroid:assembleDebug
           ./gradlew AnkiDroid:packageFullDebugAndroidTest
 
-      - name: Set up gcloud CLI
-        uses: google-github-actions/setup-gcloud@main
+      - name: Login to Google Cloud
+        uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
         with:
+          version: '270.0.0'
           service_account_key: ${{ secrets.SERVICE_ACCOUNT }}
-          project_id: anki-android
 
-      - name: Authenticate with gcloud
-        run: |
-          echo "${{ secrets.SERVICE_ACCOUNT }}" | gcloud auth activate-service-account --key-file=-    
+      - name: Set current project
+        run: gcloud config set project ${{ secrets.FIREBASE_APP_ID }}
 
       - name: Run tests on Firebase Test Lab using gcloud
         run: |
