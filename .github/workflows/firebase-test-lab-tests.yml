@@ -48,4 +48,4 @@ jobs:
             --type=instrumentation \
             --app=AnkiDroid/build/outputs/apk/full/debug/AnkiDroid-full-arm64-v8a-debug.apk \
             --test=AnkiDroid/build/outputs/apk/androidTest/full/debug/AnkiDroid-full-debug-androidTest.apk \
-            --device=Pixel2,version=28,locale=en,orientation=portrait    
+            --device="model=Pixel 6,version=33,locale=en,orientation=portrait"  
