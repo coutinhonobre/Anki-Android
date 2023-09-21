@@ -1,9 +1,9 @@
-android-pixel-4:
+android-pixel-5:
   type: instrumentation
   app: AnkiDroid/build/outputs/apk/full/debug/AnkiDroid-full-x86_64-debug.apk
   test: AnkiDroid/build/outputs/apk/androidTest/full/debug/AnkiDroid-full-debug-androidTest.apk
   device:
     - model: flame
-      version: 29
+      version: 30
       locale: 'en'
       orientation: portrait
