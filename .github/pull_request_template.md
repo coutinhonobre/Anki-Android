@@ -8,11 +8,11 @@ _Descreva o problema ou funcionalidade e a motivação_
 
 Ao criar uma nova branch, por favor, siga as nossas convenções de nomeclatura:
 
-- **Feature Branches**: `feature/<ID_do_Ticket>-<Descricao_Resumida>`
-- **Fix Branches**: `fix/<ID_do_Ticket>-<Descricao_Resumida>`
+- **Feature Branches**: `feature/<TICKETID>/<Descricao-Resumida>`
+- **Fix Branches**: `fix/<TicketID>/<Descricao-Resumida>`
 - **Release Branches**: `release/<Versao>`
-- **Hotfix Branches**: `hotfix/<ID_do_Ticket>-<Descricao_Resumida>`
-- **Support Branches**: `support/<ID_do_Ticket>-<Descricao_Resumida>`
+- **Hotfix Branches**: `hotfix/<TICKETID>/<Descricao-Resumida>`
+- **Support Branches**: `support/<TICKETID>/<Descricao-Resumida>`
 
 Isso nos ajuda a manter um histórico de código limpo e fácil de seguir.
 
