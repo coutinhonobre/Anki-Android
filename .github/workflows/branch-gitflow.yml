@@ -19,11 +19,11 @@ jobs:
           branch_name=${GITHUB_REF#refs/heads/}
           
           # Verifica se o nome da branch segue a convenção
-          if [[ ! $branch_name =~ ^feature/[a-zA-Z0-9-/]+.*$ ]] && \
-             [[ ! $branch_name =~ ^fix/[a-zA-Z0-9-]+-.*$ ]] && \
+          if [[ ! $branch_name =~ ^feature/[a-zA-Z0-9/]+.*$ ]] && \
+             [[ ! $branch_name =~ ^fix/[a-zA-Z0-9/]+-.*$ ]] && \
              [[ ! $branch_name =~ ^release/.*$ ]] && \
-             [[ ! $branch_name =~ ^hotfix/[a-zA-Z0-9-]+-.*$ ]] && \
-             [[ ! $branch_name =~ ^support/[a-zA-Z0-9-]+-.*$ ]]; then
+             [[ ! $branch_name =~ ^hotfix/[a-zA-Z0-9/]+-.*$ ]] && \
+             [[ ! $branch_name =~ ^support/[a-zA-Z0-9/]+-.*$ ]]; then
             echo "ERROR: O nome da branch '$branch_name' não segue a convenção de nomenclatura."
             echo "Por favor, consulte o arquivo README para mais informações sobre a convenção de nomenclatura de branches."
             echo "A equipe do AnkiDroid agradece pela sua colaboração!"
