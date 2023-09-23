@@ -25,6 +25,16 @@ jobs:
             echo "Por favor, use uma das seguintes nomeclaturas: feature: [ID do Ticket] Descrição, fix: [ID do Ticket] Descrição, release: [ID do Ticket] Descrição, hotfix: [ID do Ticket] Descrição, support: [ID do Ticket] Descrição."
             exit 1
           fi
+          
+          if [[ "$BASE_BRANCH" == "main" && ! "$PR_TITLE" =~ ^(release: \[[a-zA-Z0-9]+\] |hotfix: \[[a-zA-Z0-9]+\] ) ]]; then
+            echo "error: PRs com base na branch 'main' devem ser do tipo 'release' ou 'hotfix'."
+            exit 1
+          fi
+
+          if [[ "$BASE_BRANCH" == "develop" && ! "$PR_TITLE" =~ ^(feature: \[[a-zA-Z0-9]+\] |fix: \[[a-zA-Z0-9]+\] ) ]]; then
+            echo "error: PRs com base na branch 'develop' devem ser do tipo 'feature' ou 'fix'."
+            exit 1
+          fi
 
       - name: Add comment to PR
         if: failure()
