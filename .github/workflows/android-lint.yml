@@ -51,10 +51,3 @@ jobs:
 
       - name: Lint with Gradle
         run: ./gradlew lintPlayDebug :api:lintDebug ktLintCheck lint-rules:test --daemon
-
-    # Opcional: Se você quiser postar os resultados do lint como comentários no PR
-    #- name: Post lint results
-    #  uses: yutailang0119/action-android-lint@v1
-    #  with:
-    #    github_token: ${{ secrets.GITHUB_TOKEN }}
-    #    lint_result_dir: app/build/reports/lint-results.xml
