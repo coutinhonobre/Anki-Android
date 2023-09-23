@@ -29,7 +29,3 @@ jobs:
             echo "A equipe do AnkiDroid agradece pela sua colaboração!"
             exit 1
           fi
-      - name: Custom step that should not fail
-        if: failure()
-        run: echo "Um dos passos anteriores falhou, impedindo a mesclagem."
-        continue-on-error: false
