@@ -1,27 +1,48 @@
 <!--- Please fill the necessary details below -->
-## Purpose / Description
-_Describe the problem or feature and motivation_
+## Propósito / Descrição
+_Descreva o problema ou funcionalidade e a motivação_
 
-## Fixes
-Fixes _Link to the issues._
+## Contribuindo para o Projeto
 
-## Approach
-_How does this change address the problem?_
+## Nomeclatura das Branches
 
-## How Has This Been Tested?
+Ao criar uma nova branch, por favor, siga as nossas convenções de nomeclatura:
 
-Please describe the tests that you ran to verify your changes. Provide instructions so we can reproduce. Please also list any relevant details for your test configuration (SDK version(s), emulator or physical, etc)
+- **Feature Branches**: `feature/<TICKETID>/<Descricao-Resumida>`
+- **Fix Branches**: `fix/<TicketID>/<Descricao-Resumida>`
+- **Release Branches**: `release/<Versao>`
+- **Hotfix Branches**: `hotfix/<TICKETID>/<Descricao-Resumida>`
+- **Support Branches**: `support/<TICKETID>/<Descricao-Resumida>`
 
-## Learning (optional, can help others)
-_Describe the research stage_
+Isso nos ajuda a manter um histórico de código limpo e fácil de seguir.
 
-_Links to blog posts, patterns, libraries or addons used to solve this problem_
 
-## Checklist
-_Please, go through these checks before submitting the PR._
+### Criando Pull Requests
 
-- [ ] You have a descriptive commit message with a short title (first line, max 50 chars).
-- [ ] You have commented your code, particularly in hard-to-understand areas
-- [ ] You have performed a self-review of your own code
-- [ ] UI changes: include screenshots of all affected screens (in particular showing any new or changed strings)
-- [ ] UI Changes: You have tested your change using the [Google Accessibility Scanner](https://play.google.com/store/apps/details?id=com.google.android.apps.accessibility.auditor)
+Ao criar um Pull Request, por favor, siga as nossas convenções de nomeclatura para facilitar o rastreamento e revisão.
+
+#### Nomeclatura do Título do PR
+```
+<tipo>: [<Identificador do Ticket>] <Descrição>
+```
+
+- **`<tipo>`**: Este é o tipo de mudança que você está propondo. Pode ser um dos seguintes:
+    - `feature`: Para novas funcionalidades ou melhorias.
+    - `fix`: Para correções de bugs.
+    - `release`: Para preparações de novas versões.
+    - `hotfix`: Para correções urgentes.
+    - `support`: Para outras mudanças que não se encaixam nas categorias acima.
+
+- **`<Ticket>`**: Este é o identificador do ticket relacionado à sua mudança.
+
+- **`<Descrição>`**: Uma breve descrição do que o PR faz.
+
+#### Exemplos de Títulos de PR
+
+- `feature: [SQT-123] Add Login Button`
+- `fix: [SQT-124] Resolve Memory Leak`
+- `release: [SQT-125] Prepare for Version 1.0`
+- `hotfix: [SQT-126] Fix Security Vulnerability`
+- `support: [SQT-127] Update Documentation`
+
+---

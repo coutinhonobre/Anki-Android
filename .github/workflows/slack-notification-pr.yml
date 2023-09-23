@@ -1,0 +1,31 @@
+name: Slack Notification on PR Create
+
+on:
+  pull_request:
+    types:
+      - opened
+
+jobs:
+  send_slack_notification:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Send Slack Notification
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        run: |
+          curl -X POST --data-urlencode "payload={
+            \"channel\": \"#pull-request\",
+            \"username\": \"incoming-webhook\",
+            \"text\": \"@channel Achou que eu não conseguiria mandar mensagem para você? 😄 
+          Um novo Pull Request foi criado por @${{ github.event.pull_request.user.login }} e está aguardando revisão! 🚀\n\n
+          **Título do PR:** ${{ github.event.pull_request.title }}\n
+          **Link para o PR:** [Partiu revisar](${{ github.event.pull_request.html_url }})\n\n
+          Revise o PR com carinho, pois ajudamos milhões de pessoas a aprender algo novo ou reforçar um conhecimento. 
+          Obrigado!\",
+            \"icon_emoji\": \":airplane_departure:\"
+          }" $SLACK_WEBHOOK_URL
+        
