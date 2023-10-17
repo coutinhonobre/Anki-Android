@@ -6,7 +6,7 @@ on:
       - opened
 
 jobs:
-  send_slack_notification:
+  send-slack-notification:
     runs-on: ubuntu-latest
 
     steps:
