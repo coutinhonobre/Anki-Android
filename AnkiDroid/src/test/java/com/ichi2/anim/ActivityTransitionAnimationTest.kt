@@ -31,7 +31,7 @@ class ActivityTransitionAnimationTest {
     @EnumSource(
         value = Direction::class,
         mode = EnumSource.Mode.EXCLUDE,
-        names = ["START", "END", "UP", "DOWN", "RIGHT", "LEFT"]
+        names = ["START", "END", "UP", "DOWN", "RIGHT", "LEFt"]
     )
     fun getInverseTransition_returns_same_input_for_not_directional_params(direction: Direction) {
         assertThat(getInverseTransition(direction), equalTo(direction))

@@ -41,7 +41,7 @@ Ao criar um Pull Request, por favor, siga as nossas convenções de nomeclatura 
 
 - `feature: [SQT-123] Add Login Button`
 - `fix: [SQT-124] Resolve Memory Leak`
-- `release: [SQT-125] Prepare for Version 1.0`
+- `release/1.0.0`
 - `hotfix: [SQT-126] Fix Security Vulnerability`
 - `support: [SQT-127] Update Documentation`
 

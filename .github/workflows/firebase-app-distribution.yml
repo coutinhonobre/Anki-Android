@@ -1,6 +1,13 @@
 name: Distribute to Firebase
 
 on:
+  workflow_run:
+    workflows: ["Android Lint", "Android Unit Tests"]
+    branches:
+      - main
+      - develop
+    types:
+      - completed
   pull_request:
     branches:
       - main
@@ -9,6 +16,7 @@ on:
 jobs:
   build-firebase-distribution:
     runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
 
     steps:
       - name: Checkout Repo
