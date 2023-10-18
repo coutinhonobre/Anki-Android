@@ -22,14 +22,14 @@ jobs:
           BASE_BRANCH="${{ github.event.pull_request.base.ref }}"
           HEAD_BRANCH="${{ github.event.pull_request.head.ref }}"
           
-          if [[ ! "$PR_TITLE" =~ ^(feature: \[[a-zA-Z0-9]+\] |fix: \[[a-zA-Z0-9]+\] |hotfix: \[[a-zA-Z0-9]+\] |support: \[[a-zA-Z0-9]+\] ) ]]; then
-            echo "error: O título do PR não segue a nomeclatura do GitFlow."
-            echo "Por favor, use uma das seguintes nomeclaturas: feature: [ID do Ticket] Descrição, fix: [ID do Ticket] Descrição, hotfix: [ID do Ticket] Descrição, support: [ID do Ticket] Descrição."
+          if [[ "$BASE_BRANCH" == "main" && "$HEAD_BRANCH" == "develop" && ! "$PR_TITLE" =~ ^release/[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "error: PRs da branch 'develop' para 'main' devem ser do tipo 'release' e seguir o formato 'release/x.y.z'."
             exit 1
           fi
           
-          if [[ "$BASE_BRANCH" == "main" && "$HEAD_BRANCH" == "develop" && ! "$PR_TITLE" =~ ^release/[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-            echo "error: PRs da branch 'develop' para 'main' devem ser do tipo 'release' e seguir o formato 'release/x.y.z'."
+          if [[ ! "$PR_TITLE" =~ ^(feature: \[[a-zA-Z0-9]+\] |fix: \[[a-zA-Z0-9]+\] |hotfix: \[[a-zA-Z0-9]+\] |support: \[[a-zA-Z0-9]+\] ) ]]; then
+            echo "error: O título do PR não segue a nomeclatura do GitFlow."
+            echo "Por favor, use uma das seguintes nomeclaturas: feature: [ID do Ticket] Descrição, fix: [ID do Ticket] Descrição, hotfix: [ID do Ticket] Descrição, support: [ID do Ticket] Descrição."
             exit 1
           fi
 
