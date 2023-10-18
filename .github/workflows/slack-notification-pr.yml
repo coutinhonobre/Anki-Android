@@ -4,9 +4,15 @@ on:
   pull_request:
     types:
       - opened
+      - synchronize
+      - reopened
+    branches:
+      - develop
+      - main
+      - master
 
 jobs:
-  send_slack_notification:
+  send-slack-notification:
     runs-on: ubuntu-latest
 
     steps:
@@ -17,15 +23,27 @@ jobs:
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         run: |
-          curl -X POST --data-urlencode "payload={
-            \"channel\": \"#pull-request\",
-            \"username\": \"incoming-webhook\",
-            \"text\": \"@channel Achou que eu não conseguiria mandar mensagem para você? 😄 
-          Um novo Pull Request foi criado por @${{ github.event.pull_request.user.login }} e está aguardando revisão! 🚀\n\n
-          **Título do PR:** ${{ github.event.pull_request.title }}\n
-          **Link para o PR:** [Partiu revisar](${{ github.event.pull_request.html_url }})\n\n
-          Revise o PR com carinho, pois ajudamos milhões de pessoas a aprender algo novo ou reforçar um conhecimento. 
-          Obrigado!\",
-            \"icon_emoji\": \":airplane_departure:\"
-          }" $SLACK_WEBHOOK_URL
+          curl -X POST $SLACK_WEBHOOK_URL -H 'Content-type: application/json' --data '{
+            "channel": "#pull-request",
+            "username": "incoming-webhook",
+            "text": "<!here> Achou que eu não conseguiria mandar mensagem para você?",
+            "attachments": [{
+              "color": "#36a64f",
+              "pretext": "Um novo Pull Request foi criado por @${{ github.event.pull_request.user.login }} e está aguardando revisão!",
+              "fields": [
+                {
+                  "title": "Título do PR",
+                  "value": "${{ github.event.pull_request.title }}",
+                  "short": false
+                },
+                {
+                  "title": "Link para o PR",
+                  "value": "<${{ github.event.pull_request.html_url }}|Partiu revisar>",
+                  "short": false
+                }
+              ],
+              "footer": "Revise o PR com carinho, pois ajudamos milhões de pessoas a aprender algo novo ou reforçar um conhecimento. Obrigado!"
+            }],
+            "icon_emoji": ":airplane_departure:"
+          }' $SLACK_WEBHOOK_URL
         

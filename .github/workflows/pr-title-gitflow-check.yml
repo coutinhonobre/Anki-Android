@@ -19,20 +19,22 @@ jobs:
         id: title_check
         run: |
           PR_TITLE="${{ github.event.pull_request.title }}"
+          BASE_BRANCH="${{ github.event.pull_request.base.ref }}"
+          HEAD_BRANCH="${{ github.event.pull_request.head.ref }}"
           
-          if [[ ! "$PR_TITLE" =~ ^(feature: \[[a-zA-Z0-9]+\] |fix: \[[a-zA-Z0-9]+\] |release: \[[a-zA-Z0-9]+\] |hotfix: \[[a-zA-Z0-9]+\] |support: \[[a-zA-Z0-9]+\] ) ]]; then
-            echo "error: O título do PR não segue a nomeclatura do GitFlow."
-            echo "Por favor, use uma das seguintes nomeclaturas: feature: [ID do Ticket] Descrição, fix: [ID do Ticket] Descrição, release: [ID do Ticket] Descrição, hotfix: [ID do Ticket] Descrição, support: [ID do Ticket] Descrição."
+          if [[ "$BASE_BRANCH" == "main" && "$HEAD_BRANCH" == "develop" && ! "$PR_TITLE" =~ ^release/[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "error: PRs da branch 'develop' para 'main' devem ser do tipo 'release' e seguir o formato 'release/x.y.z'."
             exit 1
           fi
           
-          if [[ "$BASE_BRANCH" == "main" && ! "$PR_TITLE" =~ ^(release: \[[a-zA-Z0-9]+\] |hotfix: \[[a-zA-Z0-9]+\] ) ]]; then
-            echo "error: PRs com base na branch 'main' devem ser do tipo 'release' ou 'hotfix'."
+          if [[ ! "$PR_TITLE" =~ ^(feature: \[[a-zA-Z0-9]+\] |fix: \[[a-zA-Z0-9]+\] |hotfix: \[[a-zA-Z0-9]+\] |support: \[[a-zA-Z0-9]+\] |release/[0-9]+\.[0-9]+\.[0-9]+$) ]]; then
+            echo "error: O título do PR não segue a nomeclatura do GitFlow."
+            echo "Por favor, use uma das seguintes nomeclaturas: feature: [ID do Ticket] Descrição, fix: [ID do Ticket] Descrição, hotfix: [ID do Ticket] Descrição, support: [ID do Ticket] Descrição."
             exit 1
           fi
 
           if [[ "$BASE_BRANCH" == "develop" && ! "$PR_TITLE" =~ ^(feature: \[[a-zA-Z0-9]+\] |fix: \[[a-zA-Z0-9]+\] |support: \[[a-zA-Z0-9]+\] ) ]]; then
-            echo "error: PRs com base na branch 'develop' devem ser do tipo 'feature' ou 'fix'."
+            echo "error: PRs com base na branch 'develop' devem ser do tipo 'feature', 'fix' ou 'support'."
             exit 1
           fi
 
@@ -47,7 +49,7 @@ jobs:
             "Por favor, use um dos seguintes formatos para o título do seu PR: \n" +
             "- `feature: [ID do Ticket] Descrição Concisa`\n" +
             "- `fix: [ID do Ticket] Descrição Concisa`\n" +
-            "- `release: [ID do Ticket] Descrição Concisa`\n" +
+            "- `release/x.y.z` (para PRs da branch 'develop' para 'main')\n" +
             "- `hotfix: [ID do Ticket] Descrição Concisa`\n" +
             "- `support: [ID do Ticket] Descrição Concisa`\n\n" +
             "Obrigado por ajudar o Anki a ser um app melhor! O time AnkiDroid agradece a sua contribuição! 🙏";
@@ -57,4 +59,3 @@ jobs:
               issue_number: issue_number,
               body: message
             });
-
