@@ -19,7 +19,7 @@ package androidx.drawerlayout.widget
 import android.content.Context
 import android.util.AttributeSet
 
-class ClosableDrawerLayout : DrawerLayout {
+class ClosableDrawerLayout:DrawerLayout {
     private var mAnimationEnabled = true
 
     constructor(context: Context) : super(context) {}
