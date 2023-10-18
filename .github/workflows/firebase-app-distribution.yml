@@ -1,13 +1,6 @@
 name: Distribute to Firebase
 
 on:
-  workflow_run:
-    workflows: ["Android Lint", "Android Unit Tests"]
-    branches:
-      - main
-      - develop
-    types:
-      - completed
   pull_request:
     branches:
       - main
