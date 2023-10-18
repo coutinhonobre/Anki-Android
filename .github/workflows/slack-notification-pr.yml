@@ -26,7 +26,7 @@ jobs:
           curl -X POST $SLACK_WEBHOOK_URL -H 'Content-type: application/json' --data '{
             "channel": "#pull-request",
             "username": "incoming-webhook",
-            "text": "Achou que eu não conseguiria mandar mensagem para você?",
+            "text": "<!here> Achou que eu não conseguiria mandar mensagem para você?",
             "attachments": [{
               "color": "#36a64f",
               "pretext": "Um novo Pull Request foi criado por @${{ github.event.pull_request.user.login }} e está aguardando revisão!",
